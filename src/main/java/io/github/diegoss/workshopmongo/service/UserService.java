@@ -28,6 +28,10 @@ public class UserService {
         return userRepository.insert(obj);
     }
 
+    public void delete(String id){
+        userRepository.deleteById(id);
+    }
+
     public User fromDTO(UserDTO userDTO){
         User user = new User();
         user.setId(userDTO.getId());
