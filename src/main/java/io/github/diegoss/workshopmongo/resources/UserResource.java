@@ -1,5 +1,6 @@
 package io.github.diegoss.workshopmongo.resources;
 
+import io.github.diegoss.workshopmongo.domain.Post;
 import io.github.diegoss.workshopmongo.domain.User;
 import io.github.diegoss.workshopmongo.dto.UserDTO;
 import io.github.diegoss.workshopmongo.service.UserService;
@@ -30,6 +31,12 @@ public class UserResource {
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
         var user = userService.findById(id);
         return ResponseEntity.ok().body(new UserDTO(user));
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> listPosts(@PathVariable String id){
+        var user = userService.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 
     @PostMapping
