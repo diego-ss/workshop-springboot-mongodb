@@ -2,13 +2,13 @@ package io.github.diegoss.workshopmongo.config;
 
 import io.github.diegoss.workshopmongo.domain.Post;
 import io.github.diegoss.workshopmongo.domain.User;
+import io.github.diegoss.workshopmongo.dto.AuthorDTO;
 import io.github.diegoss.workshopmongo.repository.PostRepository;
 import io.github.diegoss.workshopmongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -31,19 +31,20 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
+        userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
         Post post1 = Post.builder()
                 .id(null).date(new Date())
                 .title("Spring Boot x ASP Net Core")
                 .body("haduhsudahudiaidahuidaadasdsiudad")
-                .author(maria).build();
+                .author(new AuthorDTO(maria)).build();
 
         Post post2 = Post.builder()
                 .id(null).date(new Date())
                 .title("Let's go travel!")
                 .body("Right now man!")
-                .author(alex).build();
+                .author(new AuthorDTO(alex)).build();
 
-        userRepository.saveAll(Arrays.asList(maria, alex, bob));
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
