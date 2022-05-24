@@ -4,9 +4,9 @@ import io.github.diegoss.workshopmongo.domain.Post;
 import io.github.diegoss.workshopmongo.repository.PostRepository;
 import io.github.diegoss.workshopmongo.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,6 +26,10 @@ public class PostService {
 
     public List<Post> findByTitle(String pattern){
         return postRepository.findByTitleContainingIgnoreCase(pattern);
+    }
+    public List<Post> findByIntervalPattern(String pattern, Date initialDate, Date finalDate){
+        finalDate = new Date(finalDate.getTime() + 24 + 60 * 60 * 1000);
+        return postRepository.findByIntervalPattern(pattern, initialDate, finalDate);
     }
 
 }

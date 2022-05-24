@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.websocket.server.PathParam;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,17 @@ public class PostResource {
     @GetMapping("/titlesearch")
     public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text") String pattern){
         var obj = postService.findByTitle(URL.decodeParam(pattern));
+        return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping("/fullsearch")
+    public ResponseEntity<List<Post>> findByIntervalPattern(@RequestParam(value="text", defaultValue = "") String pattern,
+                                                            @RequestParam(value="minDate", defaultValue = "") String initialDate,
+                                                            @RequestParam(value="maxDate", defaultValue = "") String finalDate){
+        var minDate = URL.convertDate(initialDate, new Date());
+        var maxDate = URL.convertDate(finalDate, new Date());
+
+        var obj = postService.findByIntervalPattern(pattern, minDate, maxDate);
         return ResponseEntity.ok().body(obj);
     }
 
