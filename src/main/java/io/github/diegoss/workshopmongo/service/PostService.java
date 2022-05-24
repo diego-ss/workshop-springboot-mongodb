@@ -24,4 +24,8 @@ public class PostService {
                 .orElseThrow(()->new ObjectNotFoundException("Post com id " + id + " não encontrado"));
     }
 
+    public List<Post> findByTitle(String pattern){
+        return postRepository.findByTitleContainingIgnoreCase(pattern);
+    }
+
 }
